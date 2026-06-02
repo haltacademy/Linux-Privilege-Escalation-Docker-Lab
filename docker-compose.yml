@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  linux_priv_lab:
+    build:
+      context: .
+      network: host
+    container_name: linux-priv-esc-lab
+    hostname: vulnerable-ubuntu
+    ports:
+      - "2222:22"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:false # Ensure privilege escalation is permitted inside container
